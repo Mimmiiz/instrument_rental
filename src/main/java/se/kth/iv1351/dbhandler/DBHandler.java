@@ -17,10 +17,11 @@ import se.kth.iv1351.dto.RentalInstrumentDTO;
  * This takes care of the transactions to the database.
  */
 public class DBHandler {
-    private final DBAccess dbAccess;
+    private final Connection conn;
 
     public DBHandler() {
-        this.dbAccess = new DBAccess();
+        DBAccess dbAccess = new DBAccess();
+        this.conn = dbAccess.getConnection();
     }
     
     /**
@@ -30,7 +31,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     public ArrayList<InstrumentDescriptionDTO> getInstrumentDescriptions() throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT * FROM rental_instrument_description "
                 + "WHERE rental_instrument_description.quantity_available_for_rental != 0";
         Statement stmt = conn.createStatement();
@@ -60,7 +60,6 @@ public class DBHandler {
             throw new Exception("The instrument is out of stock.");
         }
         
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         String query = "INSERT INTO instrument_rental(rental_start_date, rental_return_date, "
                 + "school_id, rental_instrument_id, student_id) VALUES (?, ?, ?, ?, ?)";
@@ -97,7 +96,6 @@ public class DBHandler {
      */
     public ArrayList<RentalDTO> getRentals(String personNumber) throws SQLException {
         int studentID = getStudentID(personNumber);
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT * FROM instrument_rental "
                 + "WHERE " + studentID + " = instrument_rental.student_id "
                 + "AND rental_return_date > current_date";
@@ -125,7 +123,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     public void terminateRental(int rentalID, int rentalInstrumentID, int rentalInstrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         
         java.util.Date date = new Date(System.currentTimeMillis());
@@ -154,7 +151,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private void returnRentedInstrument(int instrumentID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         String query = "UPDATE rental_instrument SET currently_rented = '0' "
                 + "WHERE rental_instrument.id = " + instrumentID;
@@ -175,7 +171,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private void addRentedInstrument(int instrumentID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         String query = "UPDATE rental_instrument SET currently_rented = '1' "
                 + "WHERE rental_instrument.id = " + instrumentID;
@@ -198,7 +193,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      * */
     private void rentInstrumentUpdateDescription(int instrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         String query = "UPDATE rental_instrument_description "
                     + "SET quantity_rented = quantity_rented + 1, "
@@ -223,7 +217,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private void returnInstrumentUpdateDescription(int instrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         conn.setAutoCommit(false);
         String query = "UPDATE rental_instrument_description "
                 + "SET quantity_rented = quantity_rented - 1, "
@@ -247,7 +240,6 @@ public class DBHandler {
      */
     private boolean checkEligibleForRental(String personNumber) throws SQLException {
         int studentID = getStudentID(personNumber);
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT COUNT(*) < 2 AS eligible FROM instrument_rental "
                 + "WHERE " + studentID + " = instrument_rental.student_id "
                 + "AND rental_return_date > current_date";
@@ -267,7 +259,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     public int getStudentID(String personNumber) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT id from student "
                 + "WHERE student.person_id = "
                 + "(SELECT id FROM person WHERE person_number = '" + personNumber + "')";
@@ -287,7 +278,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private int getRentalInstrumentID(int instrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT * FROM rental_instrument "
                 + "WHERE rental_instrument_description_id = " + instrumentDescriptionID 
                 + "AND (rental_instrument.currently_rented = '0' "
@@ -308,7 +298,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private RentalInstrumentDTO getRentalInstrument(int rentalInstrumentID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT * FROM rental_instrument "
                 + "WHERE rental_instrument.id = " + rentalInstrumentID;
         Statement stmt = conn.createStatement();
@@ -328,7 +317,6 @@ public class DBHandler {
      * @throws SQLException if the transaction fails.
      */
     private InstrumentDescriptionDTO getRentalInstrumentDescription(int instrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT * FROM rental_instrument_description "
                 + "WHERE id = " + instrumentDescriptionID;
         Statement stmt = conn.createStatement();
@@ -343,7 +331,6 @@ public class DBHandler {
     }
     
     private boolean checkIfInstrumentIsAvailable(int instrumentDescriptionID) throws SQLException {
-        Connection conn = dbAccess.getConnection();
         String query = "SELECT COUNT(*) > 0 AS available FROM rental_instrument_description "
                 + "WHERE id = " + instrumentDescriptionID
                 + " AND rental_instrument_description.quantity_available_for_rental > 0";
