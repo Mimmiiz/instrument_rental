@@ -1,0 +1,109 @@
+cd C:\Users\maria\OneDrive\Documents\IV1351\jdbc-intro; "JAVA_HOME=C:\\Program Files\\Java\\jdk-15.0.2" cmd /c "\"C:\\Program Files\\NetBeans-12.3\\netbeans\\java\\maven\\bin\\mvn.cmd\" -Dexec.args=\"-classpath %classpath se.kth.iv1351.startup.Main\" -Dexec.executable=\"C:\\Program Files\\Java\\jdk-15.0.2\\bin\\java.exe\" -Dexec.classpathScope=runtime -Dmaven.ext.class.path=\"C:\\Program Files\\NetBeans-12.3\\netbeans\\java\\maven-nblib\\netbeans-eventspy.jar\" -Dfile.encoding=UTF-8 org.codehaus.mojo:exec-maven-plugin:3.0.0:exec"
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+
+----------------------< se.kth.id1212:basic-jdbc >----------------------
+Building basic-jdbc 1.0
+--------------------------------[ jar ]---------------------------------
+
+--- exec-maven-plugin:3.0.0:exec (default-cli) @ basic-jdbc ---
+se.kth.iv1351.dbhandler.DBHandler@67205a84
+Welcome to the instrument rental.
+Please enter your personal information.
+First name: 
+Martin
+Last name: 
+Andersson
+Person number (YYYYMMDDXXXX): 
+200612041234
+Please choose an option between 1-3
+1. View available instruments to rent
+2. View your current rentals
+3. Quit
+2
+Your current rentals: 
+1. Instrument ID: guitar_2, Name: guitar, Type: string, Brand: not available, Price: 150.0, Start date: 2021-03-15, Return date: 2021-06-15
+
+Enter 1 to terminate a rental.
+Enter 0 to return.
+0
+Please choose an option between 1-3
+1. View available instruments to rent
+2. View your current rentals
+3. Quit
+1
+Instruments available for rental: 
+1. Name: trumpet, Type: brass, Brand: not available, Price: 120.0
+2. Name: violin, Type: string, Brand: yamaha, Price: 100.0
+3. Name: tambourine, Type: percussion, Brand: not available, Price: 50.0
+4. Name: guitar, Type: string, Brand: not available, Price: 150.0
+5. Name: piano, Type: percussion, Brand: casio, Price: 200.0
+
+Enter 1 to rent an instrument.
+Enter 0 to return.
+1
+Enter the number of the instrument you want to rent: 
+5
+Enter number of months you want to rent the instrument, the minimum is 1 month and maximum is 6 months: 
+6
+The specified instrument has been rented for 6 month(s).
+Instruments available for rental: 
+1. Name: trumpet, Type: brass, Brand: not available, Price: 120.0
+2. Name: violin, Type: string, Brand: yamaha, Price: 100.0
+3. Name: tambourine, Type: percussion, Brand: not available, Price: 50.0
+4. Name: guitar, Type: string, Brand: not available, Price: 150.0
+
+Enter 1 to rent an instrument.
+Enter 0 to return.
+0
+Please choose an option between 1-3
+1. View available instruments to rent
+2. View your current rentals
+3. Quit
+2
+Your current rentals: 
+1. Instrument ID: guitar_2, Name: guitar, Type: string, Brand: not available, Price: 150.0, Start date: 2021-03-15, Return date: 2021-06-15
+2. Instrument ID: piano_3, Name: piano, Type: percussion, Brand: casio, Price: 200.0, Start date: 2021-03-15, Return date: 2021-09-15
+
+Enter 1 to terminate a rental.
+Enter 0 to return.
+0
+Please choose an option between 1-3
+1. View available instruments to rent
+2. View your current rentals
+3. Quit
+1
+Instruments available for rental: 
+1. Name: trumpet, Type: brass, Brand: not available, Price: 120.0
+2. Name: violin, Type: string, Brand: yamaha, Price: 100.0
+3. Name: tambourine, Type: percussion, Brand: not available, Price: 50.0
+4. Name: guitar, Type: string, Brand: not available, Price: 150.0
+
+Enter 1 to rent an instrument.
+Enter 0 to return.
+1
+Enter the number of the instrument you want to rent: 
+1
+Enter number of months you want to rent the instrument, the minimum is 1 month and maximum is 6 months: 
+2
+Could not rent instrument: The number of current rentals can not exceed 2.
+Instruments available for rental: 
+1. Name: trumpet, Type: brass, Brand: not available, Price: 120.0
+2. Name: violin, Type: string, Brand: yamaha, Price: 100.0
+3. Name: tambourine, Type: percussion, Brand: not available, Price: 50.0
+4. Name: guitar, Type: string, Brand: not available, Price: 150.0
+
+Enter 1 to rent an instrument.
+Enter 0 to return.
+0
+Please choose an option between 1-3
+1. View available instruments to rent
+2. View your current rentals
+3. Quit
+3
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time:  01:16 min
+Finished at: 2021-03-15T23:28:10+01:00
+------------------------------------------------------------------------
